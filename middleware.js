@@ -5,12 +5,13 @@ module.exports = (req, res, next) => {
     try {
 
         let token = req.header('x-token')
-        if (!token) {
+        if (typeof token =="undefined") {
             res.status(400).send("Token Not Found")
         }
+        token = token.split(" ")[1]
 
-        let decode = jwt.verify(token, "jwtSecret");
-        req.user = decode.user
+      
+        req.token = token
         next()
 
 
